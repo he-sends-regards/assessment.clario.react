@@ -18,7 +18,7 @@ const SignUpRules: FC<Props> = ({
   return (
     <RulesWrapper>
       <RuleItem isSubmitted={isSubmitted} isValid={characterCount}>
-        8 characters or more (no spaces)
+        Password must be 8-64 characters long with no spaces
       </RuleItem>
       <RuleItem isSubmitted={isSubmitted} isValid={upperCaseAndLowerCase}>
         Uppercase and lowercase letters

@@ -8,14 +8,14 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 const SignUpSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
+  email: Yup.string().email().required(),
   password: Yup.string()
-    .min(8, "Password must be at least 8 characters")
-    .max(64, "Password must be at most 64 characters")
-    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
-    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .matches(/\d/, "Password must contain at least one digit")
-    .required("Required"),
+    .min(8)
+    .max(64)
+    .matches(/[a-z]/)
+    .matches(/[A-Z]/)
+    .matches(/\d/)
+    .required(),
 });
 
 const SignUp = () => {
@@ -47,7 +47,7 @@ const SignUp = () => {
 
     const password = values.password;
 
-    const characterCount = password.length >= 8;
+    const characterCount = password.length >= 8 && password.length <= 64;
     const upperCaseAndLowerCase =
       /[a-z]/.test(password) && /[A-Z]/.test(password);
     const oneDigit = /\d/.test(password);
