@@ -1,30 +1,46 @@
-# React + TypeScript + Vite
+# Task 1
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Objective:** Prepare an authorization form.
 
-Currently, two official plugins are available:
+**Technology Stack:**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React
 
-## Expanding the ESLint configuration
+**Form Libraries:**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Formik
 
-- Configure the top-level `parserOptions` property like this:
+**Validation Rules:**
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+- **Email:** Default validation.
+- **Password Requirements:**
+  - **Minimum length:** 8 characters.
+  - **Maximum length:** 64 characters.
+  - **Uppercase Letters:** At least one uppercase letter.
+  - **Numerals:** At least one number.
+
+**Validation Method:**
+
+- Late validation.
+
+**UI and Principle of Late Validation:**
+
+- [Figma Design](https://www.figma.com/file/sD1rsXjJkMWMh32I63l1d7/Clario-Test-Task?type=design&node-id=0%3A1&mode=design&t=qiD0UD2lXvRz10G8-1)
+
+## How to Clone, Install, and Run
+
+This section guides you through getting the project up and running on your local machine.
+
+### Cloning the Repository
+
+To clone the repository and enter the project folder, open your terminal and run:
+
+```bash
+git clone httpshttps://github.com/he-sends-regards/assessment.clario.react.git
+
+cd your-repository
+
+npm install
+
+npm run dev
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
