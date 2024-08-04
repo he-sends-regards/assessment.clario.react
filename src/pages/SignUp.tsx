@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { EmailInput, PasswordInput, SignUpRules } from "../components";
 import { COLORS } from "../styles/colors";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const SignUpSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -30,8 +31,8 @@ const SignUp = () => {
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: SignUpSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: () => {
+      toast.success("Sign up successful!");
     },
     validateOnBlur: false,
     validateOnChange: false,
@@ -66,9 +67,8 @@ const SignUp = () => {
     );
 
     setIsSubmitted(true);
-    if (Object.keys(formErrors).length === 0) {
-      formik.handleSubmit(e);
-    }
+
+    formik.handleSubmit(e);
   };
 
   return (
