@@ -6,6 +6,7 @@ export const COLORS = {
     BORDER: {
       FOCUS: "#6F91BC",
     },
+    ICON: "#6F91BC",
   },
   BUTTON: {
     BACKGROUND_LINEAR: {
