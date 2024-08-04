@@ -1,30 +1,121 @@
 import styled from "styled-components";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
 import { EmailInput, PasswordInput, SignUpRules } from "../components";
 import { COLORS } from "../styles/colors";
+import { useState } from "react";
+
+const SignUpSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string()
+    .min(8, "Password must be at least 8 characters")
+    .max(64, "Password must be at most 64 characters")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/\d/, "Password must contain at least one digit")
+    .required("Required"),
+});
 
 const SignUp = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [validationStatus, setValidationStatus] = useState({
+    characterCount: false,
+    upperCaseAndLowerCase: false,
+    oneDigit: false,
+  });
+
+  const formik = useFormik({
+    initialValues: { email: "", password: "" },
+    validationSchema: SignUpSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+    validateOnBlur: false,
+    validateOnChange: false,
+  });
+
+  const { values, validateForm, handleChange } = formik;
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formErrors = await validateForm();
+
+    const password = values.password;
+
+    const characterCount = password.length >= 8;
+    const upperCaseAndLowerCase =
+      /[a-z]/.test(password) && /[A-Z]/.test(password);
+    const oneDigit = /\d/.test(password);
+
+    setValidationStatus({
+      characterCount,
+      upperCaseAndLowerCase,
+      oneDigit,
+    });
+
+    setIsEmailValid(!formErrors.email);
+    setIsPasswordValid(
+      characterCount &&
+        upperCaseAndLowerCase &&
+        oneDigit &&
+        !formErrors.password
+    );
+
+    setIsSubmitted(true);
+    if (Object.keys(formErrors).length === 0) {
+      formik.handleSubmit(e);
+    }
+  };
+
   return (
     <Wrapper>
-      <Title>Sign up</Title>
+      <Form onSubmit={handleSubmit}>
+        <Title>Sign up</Title>
 
-      <EmailInput />
-      <PasswordInput />
+        <EmailInput
+          handleChange={handleChange}
+          value={values.email}
+          isValid={isEmailValid}
+          isSubmitted={isSubmitted}
+        />
+        <PasswordInput
+          handleChange={handleChange}
+          value={values.password}
+          isValid={isPasswordValid}
+          isSubmitted={isSubmitted}
+        />
 
-      <SignUpRules />
+        <SignUpRules
+          isSubmitted={isSubmitted}
+          characterCount={validationStatus.characterCount}
+          upperCaseAndLowerCase={validationStatus.upperCaseAndLowerCase}
+          oneDigit={validationStatus.oneDigit}
+        />
 
-      <SignUpButton>Sign up</SignUpButton>
+        <SignUpButton type="submit">Sign up</SignUpButton>
+      </Form>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  display: flex;
   width: 100%;
   height: 100vh;
+  background: linear-gradient(to bottom right, #f4f9ff, #e0edfb);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Form = styled.form`
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom right, #f4f9ff, #e0edfb);
   gap: 20px;
 `;
 
