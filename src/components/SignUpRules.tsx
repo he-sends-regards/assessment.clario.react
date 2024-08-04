@@ -50,6 +50,7 @@ const RuleItem = styled.span<{ isSubmitted: boolean; isValid: boolean }>`
         : COLORS.RULES.INVALID
       : COLORS.COMMON_TEXT};
   font-size: 13px;
+  line-height: 18px;
 `;
 
 export default SignUpRules;
